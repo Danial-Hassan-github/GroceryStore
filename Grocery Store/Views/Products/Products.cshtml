@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Grocery_Store.Models.ProductEntity>
+@{
+    ViewBag.Title = "Products";
+}
+
+@RenderPage("~/Views/Home/Navbar.cshtml")
+@if (Convert.ToBoolean((Boolean)Session["qty"])==false)
+{
+    <h4 class="text-danger">We don't have engouh quantity for this products'</h4>
+}
+<body style="background-image: url('~/pic.jpg')">
+    <div class="container">
+        <div class="row justify-content-center" style="">
+            @foreach (var item in Model)
+            {
+                <div class="col-xl-2 col-lg-3 col-md-3 col-sm-4 col-sm-1 card bg-light m-1 p-0 " style="border:0px;">
+                    @{string basestr = (String)item.image;
+                        String rawstr = string.Format("data:image/{0};base64,{1}", item.imageType, basestr);
+                    }
+                    @using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post@*,new { id = item.id }*@))
+{
+<div class="p-0">
+    <img alt="" style="max-width: 100%; width:100%; height: 120px"
+         src="@rawstr">
+
+</div>
+<div class="card-text col-12 text-center">@item.ptitle</div>
+<div class="card-text col-12 text-center">
+    Price:@item.price
+</div>
+<div class="input-group">
+    <input hidden name="id" value="@item.id" />@*
+        @Html.ActionLink("Add To Cart", "AddToCart","Cart", new { id = item.id },htmlAttributes:new { @class="btn btn-info", style="width:75%"})*@
+    @*@Html.Editor("quantity",htmlAttributes:new {  @class="form-control", value="1",type="number",style = "width:20%;" })*@
+    <button type="submit" class="btn btn-info" style="width:75%">Add To Cart</button>
+    <input type="number" name="quantity" value="1" class="form-control" style="width:20%;" />
+</div>
+}
+                </div>
+            }
+
+        </div>
+    </div>
+
+</body>

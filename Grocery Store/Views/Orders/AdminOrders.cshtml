@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Grocery_Store.Models.OrderEntity>
+@{
+    ViewBag.Title = "Orders";
+}
+@RenderPage("~/Views/Home/AdminNavbar.cshtml")
+<table class="table" style="max-width:50%;margin:auto">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>ProductID</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+            <th>Address</th>
+            <th>Contact</th>
+        </tr>
+    </thead>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+<tr>
+    <td>
+        @item.id
+    </td>
+    <td>
+        @item.pid
+    </td>
+    <td>
+        @item.pName
+    </td>
+    <td>
+        @item.quantity
+    </td>
+    <td>
+        @item.price
+    </td>
+    <td>
+        @item.bill
+    </td>
+    <td>
+        @item.address
+    </td>
+    <td>
+        @item.contact
+    </td>
+</tr>
+        }
+    }
+</table>

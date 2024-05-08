@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Grocery_Store.Models.OrderEntity>
+@{
+    ViewBag.Title = "Orders";
+    double total = 0;
+}
+@RenderPage("~/Views/Home/Navbar.cshtml")
+<table class="table" style="max-width:50%;margin:auto">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Bill</th>
+        </tr>
+    </thead>
+    @if (Session["orders"] != null)
+    {
+        foreach (var item in Session["orders"] as List<Grocery_Store.Models.OrderEntity>)
+        {
+            total += item.bill;
+        <tr>
+            <td>
+                @item.pName
+            </td>
+            <td>
+                @item.quantity
+            </td>
+            <td>
+                @item.price
+            </td>
+            <td>
+                @item.bill
+            </td>
+        </tr>
+        }
+        }
+</table>
+<div style="margin:auto;width:25%">
+    <button class="btn btn-info" style="width:33%;margin:auto">Total:@total</button>
+</div>

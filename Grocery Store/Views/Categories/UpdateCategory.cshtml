@@ -1,0 +1,28 @@
+﻿@model Grocery_Store.Models.CategoryEntity
+@{
+    ViewBag.Title = "UpdateCategory";
+}
+@RenderPage("~/Views/Home/AdminNavbar.cshtml")
+<body>
+    <div>
+        @using (Html.BeginForm("UpdateCategory", "Categories", FormMethod.Post))
+        {
+            <table style="margin:auto;">
+                <tr>
+                    <td>id</td>
+                    <td><input name="id" class="form-control" disabled value="@Model.id" /></td>
+                </tr>
+                <tr>
+                    <td>Title</td>
+                    <td><input name="ctitle" class="form-control" value="@Model.ctitle" /></td>
+                </tr>
+                <tr>
+                    <td>Description</td>
+                    <td><input name="description" class="form-control" value="@Model.description" /></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" class="btn btn-success" value="Update" /></td>
+                </tr>
+            </table>
+        }

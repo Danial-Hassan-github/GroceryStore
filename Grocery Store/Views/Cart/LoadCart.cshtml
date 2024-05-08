@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Grocery_Store.Models.CartEntity>
+@{
+    ViewBag.Title = "LoadCart";
+    double total = 0;
+}
+@RenderPage("~/Views/Home/Navbar.cshtml")
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">TITLE</th>
+            <th scope="col">QUANTITY</th>
+            <th scope="col">PRICE</th>
+            <th scope="col">BILL</th>
+            <th scope="col" colspan="2">REMOVE</th>
+        </tr>
+    </thead>
+    @if (Session["cart"] != null)
+    {
+        foreach (var item in Session["cart"] as List<Grocery_Store.Models.CartEntity>)
+        {
+            using (Html.BeginForm("RemoveFromCart", "Cart", new { id = item.pid }))
+            {
+                total += item.bill;
+                <tr>
+                    <td>
+                        @item.pid
+                    </td>
+                    <td>
+                        @item.pName
+                    </td>
+                    <td>
+                        @item.quantity
+                    </td>
+                    <td>
+                        @item.price
+                    </td>
+                    <td>
+                        @item.bill
+                    </td>
+                    <td>
+                        @* @Html.ActionLink("Text", "Action","Controller", route Values,html Attributes)*@
+                        @*@Html.ActionLink("Update", "UpdateProduct", new { id = item.pid })*@
+                        @*@Html.ActionLink("Delete by id", "Delete", new { id = item.Emp_id })*@
+                        <button type="submit" class="btn btn-danger">Remove</button>
+                    </td>
+                </tr>
+            }
+        }
+    }
+</table>
+<div style="margin:auto;width:25%">
+    <button class="btn btn-info"  style = "width:32%;margin:auto">Total:@total</button>
+</div>
+    <div style="margin:auto;width:25%">
+        @Html.ActionLink("Place Order", "PlaceOrder", "Orders", null, htmlAttributes: new { @class = "btn btn-success", style = "width=100%;margin:auto" })
+    </div>
+    @*<h1>Total:@total</h1>
+*@

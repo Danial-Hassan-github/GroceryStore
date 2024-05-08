@@ -1,0 +1,38 @@
+﻿@model Grocery_Store.Models.ProductEntity
+@{
+    ViewBag.Title = "UpdateProduct";
+}
+@RenderPage("~/Views/Home/AdminNavbar.cshtml")
+<body>
+    <div>
+        @using (Html.BeginForm("UpdateProduct", "Products", FormMethod.Post))
+        {
+        <table style="margin:auto">
+            <tr>
+                <td>id</td>
+                <td><input name="id" class="form-control" disabled value="@Model.id" /></td>
+            </tr>
+            <tr>
+                <td>Title</td>
+                <td><input name="ptitle" class="form-control" value="@Model.ptitle" /></td>
+            </tr>
+            <tr>
+                <td>Category</td>
+                <td>@Html.DropDownList("category", (List<SelectListItem>)ViewBag.categories, Model.category, htmlAttributes: new { @class = "form-control" })</td>
+            </tr>
+            <tr>
+                <td>Price</td>
+                <td><input name="price" class="form-control" value="@Model.price" /></td>
+            </tr>
+            <tr>
+                <td>Select Image</td>
+                <td><input name="fileAttachment" class="form-control" type="file" /></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                <input type="submit" class="btn btn-success" value="Update" />
+                </td>
+            </tr>
+        </table>
+        }

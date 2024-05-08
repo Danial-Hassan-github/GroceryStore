@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewBag.Title = "AdminProducts";
+}
+@model IEnumerable<Grocery_Store.Models.ProductEntity>
+<body>
+@RenderPage("~/Views/Home/AdminNavbar.cshtml")
+
+@using (Html.BeginForm("AdminProducts", "Products", FormMethod.Post, new { enctype = "multiPart/form-data" }))
+{
+    <table style="margin:auto;margin-top:3px">
+        <tr>
+            <td>@Html.Label("Title")</td>
+            <td>@Html.TextBox("ptitle",null,htmlAttributes:new { @class="form-control"})</td>
+        </tr>
+        <tr>
+            <td>@Html.Label("Category")</td>
+            <td>@Html.DropDownList("category", (List<SelectListItem>)ViewBag.categories, "--Select Category--", htmlAttributes: new { @class = "form-control" })</td>
+        </tr>
+        <tr>
+            <td>@Html.Label("Price")</td>
+            <td>@Html.TextBox("price",null, htmlAttributes: new { @class = "form-control" })</td>
+        </tr>
+        <tr>
+            <td>Select Image</td>
+            <td><input name="fileAttachment" class="form-control" type="file" /></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" class="btn btn-success" value="Save" />
+                <input type="reset" class="btn btn-danger" value="Reset" />
+            </td>
+        </tr>
+    </table>
+}
+    </body>
+@*@RenderPage("~/Views/Products/ProductsTable.cshtml")*@
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">IMAGE</th>
+            <th scope="col">TITLE</th>
+            <th scope="col">CATEGORY</th>
+            <th scope="col">PRICE</th>
+            <th scope="col">QUANTITY</th>
+            <th scope="col" colspan="2">Action</th>
+        </tr>
+    </thead>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            using (Html.BeginForm("Delete", "Products", new { id = item.id }))
+            {
+<tr>
+    <td>
+        @item.id
+    </td>
+    <td>
+        @{string basestr = (String)item.image;
+            String rawstr = string.Format("data:image/{0};base64,{1}", item.imageType, basestr);
+        }
+        <img alt="" style="max-width: 30px; width:30px; height: 30px"
+             src="@rawstr">
+    </td>
+    <td>
+        @item.ptitle
+    </td>
+    <td>
+        @item.category
+    </td>
+    <td>
+        @item.price
+    </td>
+    <td>
+        @item.quantity
+    </td>
+    <td>
+        @* @Html.ActionLink("Text", "Action","Controller", route Values,html Attributes)*@
+        @Html.ActionLink("Update", "UpdateProduct", new { id = item.id }, htmlAttributes: new { @class = "btn btn-success" })
+        @*@Html.ActionLink("Delete by id", "Delete", new { id = item.Emp_id })*@
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </td>
+</tr>
+            }
+
+        }
+    }
+</table>
